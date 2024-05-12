@@ -9,7 +9,7 @@
 #include "MutableIterable.h"
 
 template <class T>
-class MutableCollection: Collection<T>, MutableIterable<T>{
+class MutableCollection: public Collection<T>, public virtual MutableIterable<T>{
 private:
 
 public:

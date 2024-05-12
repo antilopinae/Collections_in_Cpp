@@ -8,7 +8,7 @@
 #include "Collection.h"
 
 template <class T>
-class LinkedList: Collection<T>{
+class LinkedList: public Collection<T>{
 private:
 
 public:

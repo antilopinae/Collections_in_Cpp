@@ -20,10 +20,8 @@ set(
         ListSequence.cpp
 
         ${APP_DOMAIN}/Iterable.h
-        ${SRC_DOMAIN}/Iterable.cpp
 
         ${APP_DOMAIN}/Collection.h
-        ${SRC_DOMAIN}/Collection.cpp
 
         ${APP_DOMAIN}/MutableIterable.h
         ${SRC_DOMAIN}/MutableIterable.cpp

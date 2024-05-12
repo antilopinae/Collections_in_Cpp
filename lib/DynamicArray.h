@@ -8,7 +8,7 @@
 #include "Collection.h"
 
 template <class T>
-class DynamicArray: Collection<T>{
+class DynamicArray: protected Collection<T>{
 private:
 public:
     DynamicArray(T* items, int count);

@@ -9,7 +9,7 @@
 #include "LinkedList.h"
 
 template <class T>
-class MutableLinkedList: LinkedList<T>, MutableCollection<T>{
+class MutableLinkedList: public LinkedList<T>, public virtual MutableCollection<T>{
 private:
 
 public:

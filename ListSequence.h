@@ -7,7 +7,7 @@
 
 #include "MutableLinkedList.h"
 
-template <class T> class ListSequence: MutableLinkedList<T>{
+template <class T> class ListSequence: protected MutableLinkedList<T>{
 private:
     LinkedList<T> _list;
 public:

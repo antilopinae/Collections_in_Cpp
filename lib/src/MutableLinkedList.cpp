@@ -2,7 +2,7 @@
 #include "LinkedList.h"
 
 template <class T>
-class MutableLinkedList: LinkedList<T>, MutableCollection<T>{
+class MutableLinkedList: protected LinkedList<T>, protected virtual MutableCollection<T>{
 private:
 
 public:

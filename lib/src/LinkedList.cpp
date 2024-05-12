@@ -1,7 +1,7 @@
 #include "Collection.h"
 
-template <class T> class LinkedList: Collection<T>{
-private:
+template <class T>
+class LinkedList: public Collection<T>{
 
 public:
     LinkedList (T* const items, int count);

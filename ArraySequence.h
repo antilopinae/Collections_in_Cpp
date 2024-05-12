@@ -7,7 +7,7 @@
 
 #include "MutableDynamicArray.h"
 
-template <class T> class ArraySequence: MutableDynamicArray<T>{
+template <class T> class ArraySequence: protected MutableDynamicArray<T>{
 public:
     ArraySequence (T* items, int count);
     ArraySequence();

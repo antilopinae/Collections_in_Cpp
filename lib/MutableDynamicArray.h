@@ -9,7 +9,7 @@
 #include "MutableCollection.h"
 
 template <class T>
-class MutableDynamicArray: DynamicArray<T>, MutableCollection<T>{
+class MutableDynamicArray: public DynamicArray<T>, public virtual MutableCollection<T>{
 private:
 public:
     MutableDynamicArray(T* items, int count);

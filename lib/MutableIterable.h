@@ -8,7 +8,7 @@
 #include "Iterable.h"
 
 template <class T>
-class MutableIterable: Iterable<T>{
+class MutableIterable: public virtual Iterable<T>{
 private:
 
 public:
