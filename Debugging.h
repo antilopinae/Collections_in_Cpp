@@ -82,6 +82,8 @@ public:
         _menus[num]->startMenu();
     };
     View(){
+//        Menu * _start = new Menu(&start_menu_view, &start_menu_void, &View::change_menu); //start
+
 //        _menus = {
 //                new Menu(&start_menu_view, &start_menu_void, &View::change_menu), //start
 //                new Menu(&delete_menu_view, &delete_menu_void, &View::change_menu), //delete

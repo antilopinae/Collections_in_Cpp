@@ -15,7 +15,9 @@ public:
             Collection<T>::Append(items[i]);
         }
     };
-    MutableLinkedList (){};
+    MutableLinkedList (){
+        Collection<T>::DeleteCollection();
+    };
     MutableLinkedList (const MutableLinkedList <T> & list){
         Collection<T>::DeleteCollection();
         int size = list.GetLength();

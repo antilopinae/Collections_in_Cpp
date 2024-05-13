@@ -11,18 +11,14 @@
 template <class T>
 class MutableListSequence: public Iterable<T>{
 private:
-    MutableLinkedList<T> _list;
+    MutableLinkedList<T> _list = MutableLinkedList<T>();
 public:
     MutableListSequence (T* items, int count){
-        _list = MutableLinkedList<T>();
-
         for(int i =0; i < count; ++i){
             _list.Append(items[i]);
         }
     };
-    MutableListSequence (){
-        _list = MutableLinkedList<T>();
-    };
+    MutableListSequence (){};
     T GetFirst() const override final{
         return _list.GetFirst();
     };
@@ -36,10 +32,10 @@ public:
         return _list.GetLength();
     };
     void Append(const T item) const override final{
-        return _list.Append(item);
+        _list.Append(item);
     };
     void Prepend(const T item) const override final{
-        return _list.Prepend(item);
+        _list.Prepend(item);
     };
     void InsertAt(const T item, int index) const override final{
         _list.InsertAt(item, index);

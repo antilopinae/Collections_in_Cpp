@@ -25,7 +25,12 @@ public:
         else throw "TypeObject is empty!";
     };
     void reset(){
-        if(!_isEmpty) free(_element);
+        if(!_isEmpty) {
+            free(_element);
+        }
+        _isEmpty = true;
+    }
+    void resetEmpty(){
         _isEmpty = true;
     }
 };
