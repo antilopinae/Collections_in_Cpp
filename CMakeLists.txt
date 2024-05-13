@@ -12,24 +12,14 @@ set(
         main.cpp
 
         ArraySequence.h
-        ArraySequence.cpp
 
-        ListSequence.h
-        ListSequence.cpp
+        MutableListSequence.h
 
         ${APP_DOMAIN}/Iterable.h
 
         ${APP_DOMAIN}/Collection.h
 
-        ${APP_DOMAIN}/MutableIterable.h
-
-        ${APP_DOMAIN}/MutableCollection.h
-
         ${APP_DOMAIN}/DynamicArray.h
-
-        ${APP_DOMAIN}/MutableDynamicArray.h
-
-        ${APP_DOMAIN}/LinkedList.h
 
         ${APP_DOMAIN}/MutableLinkedList.h
 
@@ -38,6 +28,7 @@ set(
         ${APP_DOMAIN}/vector.h
         Testing.h
         Debugging.h
+        lib/MutableLinkedList.h
 )
 
 add_executable(untitled ${SOURCE_FILES})

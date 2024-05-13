@@ -5,26 +5,24 @@
 #ifndef MUTABLE_LINKED_LIST
 #define MUTABLE_LINKED_LIST
 
-#include "MutableCollection.h"
-#include "LinkedList.h"
+#include "Collection.h"
 
 template <class T>
-class MutableLinkedList: public LinkedList<T>, public virtual MutableCollection<T>{
-private:
-
+class MutableLinkedList: public virtual Collection<T>{
 public:
-    MutableLinkedList (T* items, int count);
-    MutableLinkedList ();
-    MutableLinkedList (MutableLinkedList <T> * const list);
-    T GetFirst();
-    T GetLast();
-    T Get(int index);
-    MutableLinkedList<T>* GetSubList(int startIndex, int endIndex);
-    int GetLength();
-    void Append(T item);
-    void Prepend(T item);
-    void InsertAt(T item, int index);
-    MutableLinkedList<T>* Concat(MutableLinkedList<T> * const list);
+    MutableLinkedList (T* items, int count){
+        for(int i = 0; i< count; ++i){
+            Collection<T>::Append(items[i]);
+        }
+    };
+    MutableLinkedList (){};
+    MutableLinkedList (const MutableLinkedList <T> & list){
+        Collection<T>::DeleteCollection();
+        int size = list.GetLength();
+        for(int i = 0; i< size; ++i){
+            Collection<T>::Append(list.Get(i));
+        }
+    };
 };
 
 #endif // MUTABLE_LINKED_LIST

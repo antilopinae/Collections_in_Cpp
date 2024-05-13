@@ -24,6 +24,10 @@ public:
         }
         else throw "TypeObject is empty!";
     };
+    void reset(){
+        if(!_isEmpty) free(_element);
+        _isEmpty = true;
+    }
 };
 
 #endif //OBJECT_H

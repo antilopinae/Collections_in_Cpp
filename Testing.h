@@ -7,7 +7,7 @@
 
 #include <assert.h>
 #include "Collection.h"
-#include "ListSequence.h"
+#include "MutableListSequence.h"
 #include "ArraySequence.h"
 
 int test() {
@@ -48,19 +48,19 @@ int test() {
 
     assert(collection1.GetLength() == 6);
 
-    Collection<int>* collection3 = collection1.GetSubsequence(2,6);
+    Collection<int>* collection3 = collection1.GetSubsequence(2,5);
 
-    assert(collection1.Get(0) == 3);
-    assert(collection1.Get(1) == 4);
-    assert(collection1.Get(2) == 5);
-    assert(collection1.Get(3) == 6);
+    assert(collection3->Get(0) == 3);
+    assert(collection3->Get(1) == 4);
+    assert(collection3->Get(2) == 5);
+    assert(collection3->Get(3) == 6);
 
     Collection<int>* collection4 = collection1.GetSubsequence(0,1);
 
-    assert(collection1.GetFirst() == 1);
-    assert(collection1.GetLast() == 2);
-    assert(collection1.Get(0) == 1);
-    assert(collection1.Get(1) == 2);
+    assert(collection4->GetFirst() == 1);
+    assert(collection4->GetLast() == 2);
+    assert(collection4->Get(0) == 1);
+    assert(collection4->Get(1) == 2);
 
     collection1.InsertAt(5000, 0);
     assert(collection1.GetFirst() == 5000);
@@ -76,6 +76,12 @@ int test() {
 
     delete collection3;
     delete collection4;
+
+
+    ArraySequence<int> arraySequence = ArraySequence<int>(&{2,3,4},3);
+
+    MutableListSequence<int> listSequence = MutableListSequence<int>();
+
 
     return 1;
 }
