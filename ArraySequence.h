@@ -7,7 +7,7 @@
 
 #include "DynamicArray.h"
 
-template <class T> class ArraySequence: private Iterable<T>{
+template <class T> class ArraySequence: public Iterable<T>{
     DynamicArray<T> _array;
 private:
     void Delete(int index) const override final{
@@ -17,16 +17,7 @@ private:
         // nothing to do;
     }
 public:
-    ArraySequence (T* items, int count){
-        _array = new DynamicArray<T>();
-
-        for(int i =0; i < count; ++i){
-            _array.Append(items[i]);
-        }
-    };
-    ArraySequence (){
-        _array = new DynamicArray<T>();
-    };
+    ArraySequence (T* items, int count) :_array(DynamicArray(items, count)){};
 
     T GetFirst() const override final{
         return _array.GetFirst();

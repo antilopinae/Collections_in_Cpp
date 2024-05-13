@@ -8,7 +8,7 @@
 #include "Collection.h"
 
 template <class T>
-class DynamicArray: private virtual Collection<T>{
+class DynamicArray: public virtual Collection<T>{
 protected:
     void Delete(int index) const override final{
         Collection<T>::Delete(index);

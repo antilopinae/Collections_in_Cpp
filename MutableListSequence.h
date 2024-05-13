@@ -14,14 +14,14 @@ private:
     MutableLinkedList<T> _list;
 public:
     MutableListSequence (T* items, int count){
-        _list = new MutableLinkedList<T>();
+        _list = MutableLinkedList<T>();
 
         for(int i =0; i < count; ++i){
             _list.Append(items[i]);
         }
     };
     MutableListSequence (){
-        _list = new MutableLinkedList<T>();
+        _list = MutableLinkedList<T>();
     };
     T GetFirst() const override final{
         return _list.GetFirst();
