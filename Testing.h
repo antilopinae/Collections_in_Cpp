@@ -6,13 +6,14 @@
 #define TESTING_H
 
 #include <assert.h>
-#include "Collection.h"
-#include "MutableListSequence.h"
+#include "LinkedList.h"
+#include "ListSequence.h"
 #include "ArraySequence.h"
+#include "MutableStack.h"
 
 int test() {
     {
-        Collection<int> collection1 = Collection<int>();
+        LinkedList<int> collection1 = LinkedList<int>();
 
         collection1.Append(3);
         collection1.Prepend(2);
@@ -24,7 +25,7 @@ int test() {
         assert(collection1.Get(1) == 2);
         assert(collection1.Get(2) == 3);
 
-        Collection<int> collection2 = Collection<int>();
+        LinkedList<int> collection2 = LinkedList<int>();
 
         collection2.Append(6);
         collection2.Prepend(4);
@@ -49,14 +50,14 @@ int test() {
 
         assert(collection1.GetLength() == 6);
 
-        Collection<int>* collection3 = collection1.GetSubsequence(2,5);
+        LinkedList<int>* collection3 = collection1.GetSubsequence(2,5);
 
         assert(collection3->Get(0) == 3);
         assert(collection3->Get(1) == 4);
         assert(collection3->Get(2) == 5);
         assert(collection3->Get(3) == 6);
 
-        Collection<int>* collection4 = collection1.GetSubsequence(0,1);
+        LinkedList<int>* collection4 = collection1.GetSubsequence(0,1);
 
         assert(collection4->GetFirst() == 1);
         assert(collection4->GetLast() == 2);
@@ -99,7 +100,7 @@ int test() {
     }
 
     {
-        MutableListSequence<int> listSequence1 = MutableListSequence<int>();
+        ListSequence<int> listSequence1 = ListSequence<int>();
         listSequence1.Append(3);
         listSequence1.Prepend(2);
         listSequence1.InsertAt(1, 0);
@@ -110,7 +111,7 @@ int test() {
         assert(listSequence1.Get(1) == 2);
         assert(listSequence1.Get(2) == 3);
 
-        MutableListSequence<int> listSequence2 = MutableListSequence<int>();
+        ListSequence<int> listSequence2 = ListSequence<int>();
 
         listSequence2.Append(6);
         listSequence2.Prepend(4);
@@ -170,6 +171,70 @@ int test() {
 
         assert(listSequence2.GetLength() == 0);
     }
+
+//    {
+//        MutableStack<int> mutableStack1 = MutableStack<int>();
+//
+//        for(int i = 0; i<20; ++i){
+//            mutableStack1.Append(i*i*i);
+//        }
+//
+//        for(int i = 19; i>=0; --i){
+//            int element = mutableStack1.GetLast();
+//            assert(element == i*i*i);
+//        }
+//
+//        assert(mutableStack1.GetLength() == 0);
+//
+//        for(int i = 0; i<20; ++i){
+//            mutableStack1.Append(i*i);
+//        }
+//
+//        MutableStack<int>* mutableStack2 = new MutableStack<int>();
+//
+//        for(int i = 0; i<20; ++i){
+//            mutableStack2->Append(i);
+//        }
+//
+//        assert(mutableStack2->GetLength() == 20);
+//
+//        mutableStack1.Concat(mutableStack2);
+//
+//        for(int i = 19; i>=0; --i){
+//            assert(mutableStack1.GetLast()==i);
+//        }
+//        for(int i = 19; i>=0; --i){
+//            assert(mutableStack1.GetLast()== i*i);
+//        }
+//
+//        assert(mutableStack1.GetLength() == 0);
+//
+//        for(int i = 19; i>=0; --i){
+//            assert(mutableStack2->GetLast() == i);
+//        }
+//
+//        assert(mutableStack2->GetLength() == 0);
+//
+//        for(int i = 0; i<20; ++i){
+//            mutableStack2->Append(i);
+//        }
+//
+//        MutableStack<int>* mutableStack3;
+//        mutableStack3 = mutableStack2->GetSubsequence(1,19);
+//
+//        for(int i = 19; i>=1; --i){
+//            assert(mutableStack3->GetLast()==i);
+//        }
+//        assert(mutableStack3->GetLength() == 0);
+//
+//        mutableStack3->DeleteCollection();
+//        mutableStack2->DeleteCollection();
+//        mutableStack1.DeleteCollection();
+//
+//        delete mutableStack2;
+//        delete mutableStack3;
+//    }
+
     return 1;
 }
 

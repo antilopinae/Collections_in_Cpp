@@ -9,26 +9,26 @@ include_directories(${APP_DOMAIN})
 
 set(
         SOURCE_FILES
+
         main.cpp
+        Testing.h
+        Debugging.h
+        MutableStack.h
 
-        ArraySequence.h
-
-        MutableListSequence.h
-
-        ${APP_DOMAIN}/Iterable.h
-
-        ${APP_DOMAIN}/Collection.h
+        ${APP_DOMAIN}/Sequence.h
 
         ${APP_DOMAIN}/DynamicArray.h
 
-        ${APP_DOMAIN}/MutableLinkedList.h
+        ${APP_DOMAIN}/LinkedList.h
+
+        ${APP_DOMAIN}/MutableListSequence.h
+
+        ${APP_DOMAIN}/ArraySequence.h
 
         ${APP_DOMAIN}/TypeObject.h
 
-        ${APP_DOMAIN}/vector.h
-        Testing.h
-        Debugging.h
-        lib/MutableLinkedList.h
+        ${APP_DOMAIN}/VectorList.h
+        lib/DynamicArray.h
 )
 
 add_executable(untitled ${SOURCE_FILES})

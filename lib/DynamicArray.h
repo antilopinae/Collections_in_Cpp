@@ -1,51 +1,60 @@
 //
-// Created by antilopa on 12.05.24.
+// Created by antilopa on 14.05.24.
 //
 
-#ifndef MUTABLE_DYNAMIC_ARRAY
-#define MUTABLE_DYNAMIC_ARRAY
+#ifndef DYNAMIC_ARRAY_H
+#define DYNAMIC_ARRAY_H
 
-#include "Collection.h"
+#include <cstdlib>
 
-template <class T>
-class DynamicArray: public virtual Collection<T>{
-protected:
-    void Delete(int index) const override final{
-        Collection<T>::Delete(index);
-    }
-    void DeleteCollection() const override final{
-        Collection<T>::DeleteCollection();
-    }
+template <typename T>
+class DynamicArray {
+private:
+    T *array_ptr;
 public:
-    DynamicArray(T* items, int count){
-        for(int i = 0; i< count; ++i){
-            Collection<T>::Append(T{items[i]});
-        }
-    };
-    DynamicArray(const DynamicArray<T> &dynamicArray){
-        int length = dynamicArray.GetLength();
-        Collection<T>::DeleteCollection();
-        for(int i = 0; i< length; ++i){
-            Collection<T>::Append(T{dynamicArray.Get(i)});
-        }
-    };
-    T GetFirst() const override final{
-        T element = Collection<T>::GetFirst();
-        return T{element};
-    };
-    T GetLast() const override final{
-        T element = Collection<T>::GetLast();
-        return T{element};
-    };
-    T Get(int index) const override final{
-        T element = Collection<T>::Get(index);
-        return T{element};
-    };
-    int GetLength() const override final{
-        return Collection<T>::GetLength();
-    };
+    DynamicArray(size_t size);
+    T* GetArrayPtr();
+    void Malloc(size_t size);
+    void Realloc(size_t size);
+    void Delete();
+    ~DynamicArray();
 };
 
+template <typename T>
+DynamicArray<T>::DynamicArray(size_t size) {
+    Malloc(size);
+}
 
+template <typename T>
+T *DynamicArray<T>::GetArrayPtr() {
+    return array_ptr;
+}
 
-#endif // MUTABLE_DYNAMIC_ARRAY
+template <typename T>
+void DynamicArray<T>::Delete() {
+    if(!array_ptr){
+        delete[] array_ptr;
+        array_ptr = nullptr;
+    }
+};
+
+template <typename T>
+void DynamicArray<T>::Malloc(size_t size) {
+    array_ptr = {new T{size}};
+};
+
+template <typename T>
+void DynamicArray<T>::Realloc(size_t size) {
+    if(!array_ptr) throw "Null pointer Exception!";
+    int * _ptr =(int*) realloc((void*)array_ptr, size);
+    if(!_ptr) throw "Malloc exception in dynamic array";
+    delete[] array_ptr;
+    array_ptr = _ptr;
+};
+
+template <typename T>
+DynamicArray<T>::~DynamicArray() {
+    if(!array_ptr) this->Delete();
+};
+
+#endif //DYNAMIC_ARRAY_H

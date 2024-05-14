@@ -6,7 +6,7 @@
 #define DEBUGGING_H
 
 #include <iostream>
-#include "MutableListSequence.h"
+#include "ListSequence.h"
 #include "ArraySequence.h"
 
 struct message{
@@ -52,44 +52,48 @@ public:
     };
 };
 
-void start_menu_view(){
-
-}
-int start_menu_void(message* mes){
-
-}
-
-void delete_menu_view(){
-
-}
-int delete_menu_void(message* mes){
-
-}
-
-void create_menu_view(){
-
-}
-int create_menu_void(message* mes){
-
-}
-
 class View{
 private:
     static const int count_menu = 3;
-    Menu* _menus [count_menu];
+//    const Menu* _menu[];
+
+    static void start_menu_view(){
+
+    }
+
+    static int start_menu_void(message* mes){
+
+    }
+
+    static void delete_menu_view(){
+
+    }
+
+    static int delete_menu_void(message* mes){
+
+    }
+
+    static void create_menu_view(){
+
+    }
+
+    static int create_menu_void(message* mes){
+
+    }
 public:
-    void change_menu(int num){
-        _menus[num]->startMenu();
+    static void change_menu(int num){
+//        _menu[num]->startMenu();
     };
-    View(){
-//        Menu * _start = new Menu(&start_menu_view, &start_menu_void, &View::change_menu); //start
+//    View(): _menu(){
+
+//        _menu = new Menu(&start_menu_view, &start_menu_void, &change_menu);
 
 //        _menus = {
 //                new Menu(&start_menu_view, &start_menu_void, &View::change_menu), //start
 //                new Menu(&delete_menu_view, &delete_menu_void, &View::change_menu), //delete
 //                new Menu(&create_menu_view, &create_menu_void, &View::change_menu) //create
 //        }
-    };
+//    };
     void StartView(){
         change_menu(0);
     };

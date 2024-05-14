@@ -6,15 +6,15 @@
 #define VECTOR_H
 
 template <class T>
-struct vector{
-    T element;
-    vector<T>* next;
-    vector<T>* prev;
-    vector(vector<T>* _next, const T _element, vector<T>* _prev){
+struct VectorList{
+    VectorList(VectorList<T>* _next, const T _element, VectorList<T>* _prev){
         this->next = _next;
         this->element = T{_element};
         this->prev=_prev;
-    }
+    };
+    T element;
+    VectorList<T>* next;
+    VectorList<T>* prev;
 };
 
 #endif //VECTOR_H
