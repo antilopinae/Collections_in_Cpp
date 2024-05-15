@@ -2,11 +2,12 @@
 // Created by antilopa on 12.05.24.
 //
 
-#ifndef MUTABLE_DYNAMIC_ARRAY
-#define MUTABLE_DYNAMIC_ARRAY
+#ifndef ARRAY_SEQUENCE
+#define ARRAY_SEQUENCE
 
 #include <cstdlib>
 #include "DynamicArray.h"
+#include "Exception.h"
 
 template <class T>
 class ArraySequence: public virtual Sequence<T>{
@@ -16,7 +17,7 @@ private:
     size_t top = 0;
     DynamicArray<T> array = DynamicArray<T>(capacity);
     T getElement(size_t index){
-        return T{this->array.GetArrayPtr()[index]};
+        return T{array.GetArrayPtr()[index]};
     };
     void resize(size_t _size){
         if(_size>capacity){
@@ -36,7 +37,46 @@ private:
             resize(length+add_size+add_capacity);
         }
     };
+protected:
+    Sequence<T>* Append(T item) const override{
+        const ArraySequence<T>* arraySequence{this};
+        arraySequence->Append(item);
+        return const_cast<ArraySequence<T>*>(arraySequence);
+    };
+    Sequence<T>* Prepend(T item) const override{
+        const ArraySequence<T>* arraySequence{this};
+        arraySequence->Prepend(item);
+        return const_cast<ArraySequence<T>*>(arraySequence);
+    };
+    Sequence<T>* InsertAt(T item, size_t index) const override{
+        const ArraySequence<T>* arraySequence{this};
+        arraySequence->InsertAt(item, index);
+        return const_cast<ArraySequence<T>*>(arraySequence);
+    };
+    Sequence<T>* Delete(size_t index) const override{
+        const ArraySequence<T>* arraySequence{this};
+        arraySequence->Delete(index);
+        return const_cast<ArraySequence<T>*>(arraySequence);
+    };
+    Sequence<T>* Concat(Sequence <T> * const list) const override{
+        const ArraySequence<T>* arraySequence{this};
+        arraySequence->Concat(list);
+        return const_cast<ArraySequence<T>*>(arraySequence);
+    };
+    Sequence<T>* GetSubsequence(size_t startIndex, size_t endIndex) const override{
+        const ArraySequence<T>* arraySequence{this};
+        arraySequence->GetSubsequence(startIndex, endIndex);
+        return const_cast<ArraySequence<T>*>(arraySequence);
+    };
 public:
+    ArraySequence(){
+        length=0;
+        capacity=2;
+    };
+    ArraySequence(size_t size){
+        length=0;
+        capacity = size*2 + size/2;
+    };
     ArraySequence(T* items, size_t count){
         length = count;
         capacity = length*2 + length/2;
@@ -58,7 +98,7 @@ public:
         return getElement(length-top-1);
     };
     T Get(size_t index) override final{
-        if(index>length-1) throw "Index out of bounds";
+        if(index>length-1) throw IndexOutOfBoundsException("Index out of bounds");
         if(index<top) index = capacity+index-top;
         return getElement(index);
     };
@@ -77,13 +117,17 @@ public:
         ++top;
     };
     void InsertAt(T item, size_t index) override final{
-        if(index>length-1) throw "Index out of bounds";
+        if(index>length-1) throw IndexOutOfBoundsException("Index out of bounds");
         Delete(index);
-        if(index<top) index = capacity+index-top;
+        if(index<top) {
+            index = capacity+index-top;
+            ++top;
+        }
         array.GetArrayPtr()[index] = T{item};
+        ++length;
     };
     void Delete(size_t index) override final{
-        if(index>length-1) throw "Index out of bounds";
+        if(index>length-1) throw IndexOutOfBoundsException("Index out of bounds");
         T* array_p = array.GetArrayPtr();
         if(index<top) {
             for(size_t i=capacity-top; i<=index; ++i){
@@ -111,10 +155,20 @@ public:
             this->Append(T{list->Get(i)});
         }
     };
+    Sequence<T>* GetSubsequence(size_t startIndex, size_t endIndex) override final{
+        if(startIndex>endIndex) throw IllegalIndex("Illegal index Exception");
+        if(startIndex>=length || endIndex>=length) throw IndexOutOfBoundsException("Index out of bounds Exception");
+        ArraySequence<T>* arraySequence = new ArraySequence<T>(endIndex-startIndex);
+        for(size_t i=startIndex; i<=endIndex; i++){
+            arraySequence->Append(T{this->Get(startIndex)});
+            this->Delete(startIndex);
+        }
+        return arraySequence;
+    };
     ~ArraySequence(){
         DeleteCollection();
     };
 };
 
 
-#endif // MUTABLE_DYNAMIC_ARRAY
+#endif // ARRAY_SEQUENCE

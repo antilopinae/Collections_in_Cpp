@@ -57,29 +57,29 @@ private:
     static const int count_menu = 3;
 //    const Menu* _menu[];
 
-    static void start_menu_view(){
-
-    }
-
-    static int start_menu_void(message* mes){
-
-    }
-
-    static void delete_menu_view(){
-
-    }
-
-    static int delete_menu_void(message* mes){
-
-    }
-
-    static void create_menu_view(){
-
-    }
-
-    static int create_menu_void(message* mes){
-
-    }
+//    static void start_menu_view(){
+//
+//    }
+//
+//    static int start_menu_void(message* mes){
+//
+//    }
+//
+//    static void delete_menu_view(){
+//
+//    }
+//
+//    static int delete_menu_void(message* mes){
+//
+//    }
+//
+//    static void create_menu_view(){
+//
+//    }
+//
+//    static int create_menu_void(message* mes){
+//
+//    }
 public:
     static void change_menu(int num){
 //        _menu[num]->startMenu();
@@ -95,7 +95,7 @@ public:
 //        }
 //    };
     void StartView(){
-        change_menu(0);
+//        change_menu(0);
     };
 };
 

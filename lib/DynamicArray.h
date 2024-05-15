@@ -6,6 +6,7 @@
 #define DYNAMIC_ARRAY_H
 
 #include <cstdlib>
+#include "Exception.h"
 
 template <typename T>
 class DynamicArray {
@@ -40,14 +41,14 @@ void DynamicArray<T>::Delete() {
 
 template <typename T>
 void DynamicArray<T>::Malloc(size_t size) {
-    array_ptr = {new T{size}};
+    array_ptr = {new T[size]};
 };
 
 template <typename T>
 void DynamicArray<T>::Realloc(size_t size) {
-    if(!array_ptr) throw "Null pointer Exception!";
+    if(!array_ptr) throw IllegalException("Null pointer Exception!");
     int * _ptr =(int*) realloc((void*)array_ptr, size);
-    if(!_ptr) throw "Malloc exception in dynamic array";
+    if(!_ptr) throw IllegalException("Malloc exception in dynamic array");
     delete[] array_ptr;
     array_ptr = _ptr;
 };
