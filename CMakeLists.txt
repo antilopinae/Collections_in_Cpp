@@ -13,7 +13,6 @@ set(
         main.cpp
         Testing.h
         Debugging.h
-        MutableStack.h
 
         ${APP_DOMAIN}/Sequence.h
 
@@ -32,6 +31,10 @@ set(
         ${APP_DOMAIN}/DynamicArray.h
 
         ${APP_DOMAIN}/Exception.h
+
+        ${APP_DOMAIN}/Queue.h
+
+        ${APP_DOMAIN}/MutableStack.h
 )
 
 add_executable(untitled ${SOURCE_FILES})

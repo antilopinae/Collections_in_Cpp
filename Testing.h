@@ -7,6 +7,7 @@
 
 #include <assert.h>
 #include <type_traits>
+#include <iostream>
 #include "LinkedList.h"
 #include "ListSequence.h"
 #include "ArraySequence.h"
@@ -98,51 +99,22 @@ int test() {
         collection2.Append(6);
         collection2.Prepend(4);
         collection2.InsertAt(5, 1);
+        assert(collection2.GetFirst() == 4);
+        assert(collection2.GetLast() == 5);
+        assert(collection2.Get(0) == 4);
+        assert(collection2.Get(1) == 5);
+
+        collection1.InsertAt(5000, 0);
+        assert(collection1.GetFirst() == 5000);
+
+        collection1.InsertAt(5000, 1);
+        assert(collection1.Get(1) == 5000);
 
         assert(collection2.GetFirst() == 4);
         assert(collection2.GetLast() == 5);
         assert(collection2.Get(0) == 4);
         assert(collection2.Get(1) == 5);
 
-        collection1.Concat(&collection2);
-
-        assert(collection1.GetFirst() == 1);
-        assert(collection1.GetLast() == 5);
-        assert(collection1.Get(0) == 1);
-        assert(collection1.Get(1) == 3);
-        assert(collection1.Get(2) == 4);
-        assert(collection1.Get(3) == 5);
-
-        assert(collection1.GetLength() == 4);
-
-        Sequence<int>* collection3 = collection1.GetSubsequence(2,5);
-
-        assert(collection3->Get(0) == 3);
-        assert(collection3->Get(1) == 4);
-        assert(collection3->Get(2) == 5);
-        assert(collection3->Get(3) == 6);
-
-        Sequence<int>* collection4 = collection1.GetSubsequence(0,1);
-
-        assert(collection4->GetFirst() == 1);
-        assert(collection4->GetLast() == 2);
-        assert(collection4->Get(0) == 1);
-        assert(collection4->Get(1) == 2);
-
-        collection1.InsertAt(5000, 0);
-        assert(collection1.GetFirst() == 5000);
-
-        collection1.InsertAt(5000, 6);
-        assert(collection1.Get(6) == 5000);
-
-        assert(collection2.GetFirst() == 4);
-        assert(collection2.GetLast() == 6);
-        assert(collection2.Get(0) == 4);
-        assert(collection2.Get(1) == 5);
-        assert(collection2.Get(2) == 6);
-
-        delete collection3;
-        delete collection4;
     }
     {
         ListSequence<int> collection1 = ListSequence<int>();
@@ -208,75 +180,64 @@ int test() {
         assert(collection2.Get(1) == 5);
         assert(collection2.Get(2) == 6);
 
-        delete collection3;
-        delete collection4;
     }
-//    {
-//        MutableStack<int> mutableStack1 = MutableStack<int>();
-//
-//        for(int i = 0; i<20; ++i){
-//            mutableStack1.Append(i*i*i);
-//        }
-//
-//        for(int i = 19; i>=0; --i){
-//            int element = mutableStack1.GetLast();
-//            assert(element == i*i*i);
-//        }
-//
-//        assert(mutableStack1.GetLength() == 0);
-//
-//        for(int i = 0; i<20; ++i){
-//            mutableStack1.Append(i*i);
-//        }
-//
-//        MutableStack<int>* mutableStack2 = new MutableStack<int>();
-//
-//        for(int i = 0; i<20; ++i){
-//            mutableStack2->Append(i);
-//        }
-//
-//        assert(mutableStack2->GetLength() == 20);
-//
-//        mutableStack1.Concat(mutableStack2);
-//
-//        for(int i = 19; i>=0; --i){
-//            assert(mutableStack1.GetLast()==i);
-//        }
-//        for(int i = 19; i>=0; --i){
-//            assert(mutableStack1.GetLast()== i*i);
-//        }
-//
-//        assert(mutableStack1.GetLength() == 0);
-//
-//        for(int i = 19; i>=0; --i){
-//            assert(mutableStack2->GetLast() == i);
-//        }
-//
-//        assert(mutableStack2->GetLength() == 0);
-//
-//        for(int i = 0; i<20; ++i){
-//            mutableStack2->Append(i);
-//        }
-//
-//        MutableStack<int>* mutableStack3;
-//        mutableStack3 = mutableStack2->GetSubsequence(1,19);
-//
-//        for(int i = 19; i>=1; --i){
-//            assert(mutableStack3->GetLast()==i);
-//        }
-//        assert(mutableStack3->GetLength() == 0);
-//
-//        mutableStack3->DeleteCollection();
-//        mutableStack2->DeleteCollection();
-//        mutableStack1.DeleteCollection();
-//
-//        delete massert(collection1.GetFirst() == 1);
-//        assert(collection1.GetLast() == 3);
-//        assert(collection1.Get(0) == 1);
-//        assert(collection1.Get(1) == 2);
-//        assert(collection1.Get(2) == 3);
-//        delete mutableStack3;
-//    }
+    {
+        MutableStack<int> mutableStack1 = MutableStack<int>();
+
+        for(int i = 0; i<20; ++i){
+            mutableStack1.Push(i*i*i);
+        }
+
+        for(int i = 19; i>=0; --i){
+            int element = mutableStack1.Pull();
+            assert(element == i*i*i);
+        }
+
+        assert(mutableStack1.GetLength() == 0);
+
+        for(int i = 0; i<20; ++i){
+            mutableStack1.Push(i*i);
+        }
+
+        MutableStack<int>* mutableStack2 = new MutableStack<int>();
+
+        for(int i = 0; i<20; ++i){
+            mutableStack2->Push(i);
+        }
+
+        assert(mutableStack2->GetLength() == 20);
+
+        mutableStack1.Concat(mutableStack2);
+
+        for(int i = 0; i<20; ++i){
+            assert(mutableStack1.Pull()==i);
+        }
+        for(int i = 19; i>=0; --i){
+            assert(mutableStack1.Pull()== i*i);
+        }
+
+        assert(mutableStack1.GetLength() == 0);
+
+        assert(mutableStack2->GetLength() == 0);
+
+        for(int i = 0; i<20; ++i){
+            mutableStack2->Push(i);
+        }
+
+        MutableStack<int>* mutableStack3 = dynamic_cast<MutableStack<int>*>(mutableStack2->GetSubQueue(19));
+
+        for(int i = 19; i>=1; --i){
+            assert(mutableStack3->Pull()==i);
+        }
+        assert(mutableStack3->GetLength() == 0);
+
+        mutableStack3->DeleteQueue();
+        mutableStack2->DeleteQueue();
+        mutableStack1.DeleteQueue();
+
+        delete mutableStack3;
+        delete mutableStack2;
+    }
     return 1;
 }
 

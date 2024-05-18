@@ -6,98 +6,60 @@
 #define DEBUGGING_H
 
 #include <iostream>
-#include "ListSequence.h"
-#include "ArraySequence.h"
+#include "MutableStack.h"
+#include <string>
 
-struct message{
-    int _last_number;
-    std::string _last_value;
-};
+template<class T>
+void testQueueWithInput(MutableStack<T>* queue) {
+    char choice;
+    T item;
 
-typedef void (*render_menu) ();
-typedef int (*menu_void) (message* mes);
-typedef void(*change_menu)(int menu);
+    do {
+        std::cout << "Choose an operation:\n";
+        std::cout << "1. Push\n";
+        std::cout << "2. Pop\n";
+        std::cout << "3. Get Length\n";
+        std::cout << "4. Exit\n";
+        std::cout << "Enter your choice: ";
+        std::cin >> choice;
 
-class Menu{
-private:
-    message* get_next_value (){
-        char str[20];
-        int i;
-        std::string msg;
-        getline(std::cin, msg);
-        sscanf("%s %d", str, &i);
-        printf("%d", i);
-        return new message{i, msg};
-    };
-    render_menu _render_menu;
-    menu_void _menu_void;
-    change_menu _change_menu;
-public:
-    Menu(render_menu _render, menu_void _void, change_menu _change){
-        this->_render_menu = _render;
-        this->_menu_void = _void;
-        this->_change_menu= _change;
-    };
-    void startMenu(){
-        _render_menu();
-        message* mes = get_next_value();
-        int res;
-        while(mes->_last_number != 0){
-            _render_menu();
-            mes = get_next_value();
-            res = _menu_void(mes);
-            if(res < 0) break;
+        switch (choice) {
+            case '1':
+                std::cout << "Enter item to push: ";
+                std::cin >> item;
+                queue->Push(item);
+                break;
+            case '2':
+                if (queue->GetLength() > 0) {
+                    std::cout << "Popped: " << queue->Pull() << std::endl;
+                } else {
+                    std::cout << "Queue is empty." << std::endl;
+                }
+                break;
+            case '3':
+                std::cout << "Queue Length: " << queue->GetLength() << std::endl;
+                break;
+            case '4':
+                std::cout << "Exiting..." << std::endl;
+                break;
+            default:
+                std::cout << "Invalid choice. Please enter again." << std::endl;
         }
-        _change_menu(res*(-1));
-    };
-};
+    } while (choice != '4');
+}
 
-class View{
-private:
-    static const int count_menu = 3;
-//    const Menu* _menu[];
+int debug() {
+    // Создаем очередь целых чисел
+    MutableStack<int>* intQueue = new MutableStack<int>();
+    std::cout << "Testing integer queue:\n" << std::endl;
+    testQueueWithInput(intQueue);
 
-//    static void start_menu_view(){
-//
-//    }
-//
-//    static int start_menu_void(message* mes){
-//
-//    }
-//
-//    static void delete_menu_view(){
-//
-//    }
-//
-//    static int delete_menu_void(message* mes){
-//
-//    }
-//
-//    static void create_menu_view(){
-//
-//    }
-//
-//    static int create_menu_void(message* mes){
-//
-//    }
-public:
-    static void change_menu(int num){
-//        _menu[num]->startMenu();
-    };
-//    View(): _menu(){
+    // Создаем очередь строк
+    MutableStack<std::string>* stringQueue = new MutableStack<std::string>();
+    std::cout << "Testing string queue:\n" << std::endl;
+    testQueueWithInput(stringQueue);
 
-//        _menu = new Menu(&start_menu_view, &start_menu_void, &change_menu);
-
-//        _menus = {
-//                new Menu(&start_menu_view, &start_menu_void, &View::change_menu), //start
-//                new Menu(&delete_menu_view, &delete_menu_void, &View::change_menu), //delete
-//                new Menu(&create_menu_view, &create_menu_void, &View::change_menu) //create
-//        }
-//    };
-    void StartView(){
-//        change_menu(0);
-    };
-};
-
+    return 0;
+}
 
 #endif //DEBUGGING_H

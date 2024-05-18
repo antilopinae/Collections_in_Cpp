@@ -21,6 +21,9 @@ private:
     std::string message;    // сообщение об ошибке
 };
 
+
+
+
 class IndexOutOfBoundsException: public Exception{
 public:
     IndexOutOfBoundsException(const std::string& message): Exception(message){};

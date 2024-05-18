@@ -45,7 +45,6 @@ protected:
     };
 public:
     ListSequence (): Sequence<T>(){};
-    ListSequence (void (*print_element)(T element)): Sequence<T>(print_element){};
     ListSequence (T* items, size_t count){
         for(size_t i =0; i < count; ++i){
             _list.Append(items[i]);
@@ -56,13 +55,6 @@ public:
         size_t size = list.GetLength();
         for(size_t i = 0; i< size; ++i){
             Sequence<T>::Append(list.Get(i));
-        }
-    };
-    ListSequence (const ListSequence <T> * list){
-        Sequence<T>::DeleteCollection();
-        size_t size = 6;
-        for(size_t i = 0; i< size; ++i){
-//            Sequence<T>::Append(list.Get(i));
         }
     };
     T GetFirst() override final{

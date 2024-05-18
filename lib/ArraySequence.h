@@ -14,7 +14,7 @@ class ArraySequence: public virtual Sequence<T>{
 private:
     size_t length;
     size_t capacity;
-    size_t top = 0;
+    size_t top;
     DynamicArray<T> array = DynamicArray<T>(capacity);
     T getElement(size_t index){
         return T{array.GetArrayPtr()[index]};
@@ -23,8 +23,8 @@ private:
         if(_size>capacity){
             array.Realloc(_size);
             T* array_p = array.GetArrayPtr();
-            for(size_t i = top; i<0; ++i){
-                array_p[_size+top] = array_p[capacity+top];
+            for(size_t i = 0; i<top; ++i){
+                array_p[_size-top+i] = array_p[capacity-top+i];
             }
             capacity = _size;
         }
@@ -72,10 +72,12 @@ public:
     ArraySequence(){
         length=0;
         capacity=2;
+        top=0;
     };
     ArraySequence(size_t size){
         length=0;
         capacity = size*2 + size/2;
+        top=0;
     };
     ArraySequence(T* items, size_t count){
         length = count;
@@ -84,6 +86,7 @@ public:
         for(size_t i = 0; i < count; ++i){
             ptr[i] = T{items[i]};
         }
+        top=0;
     };
     ArraySequence(const ArraySequence<T> &arraySequence):
         ArraySequence(
@@ -91,7 +94,12 @@ public:
             arraySequence.size
         ){};
     T GetFirst() override final{
-        size_t index = top>0?capacity-top:0;
+        size_t index;
+        if(top>0){
+            index = capacity-top;
+        }else{
+            index = 0;
+        }
         return getElement(index);
     };
     T GetLast() override final{
@@ -99,7 +107,12 @@ public:
     };
     T Get(size_t index) override final{
         if(index>length-1) throw IndexOutOfBoundsException("Index out of bounds");
-        if(index<top) index = capacity+index-top;
+        if(index<top) {
+            index = capacity+index-top;
+        }
+        else{
+            index = index-top;
+        }
         return getElement(index);
     };
     size_t GetLength() override final{
@@ -112,37 +125,45 @@ public:
     };
     void Prepend(T item) override final{
         checkAndAddFreeSpace(1);
-        array.GetArrayPtr()[capacity-top] = T{item};
+        array.GetArrayPtr()[capacity-top-1] = T{item};
         ++length;
         ++top;
     };
     void InsertAt(T item, size_t index) override final{
         if(index>length-1) throw IndexOutOfBoundsException("Index out of bounds");
-        Delete(index);
-        if(index<top) {
-            index = capacity+index-top;
-            ++top;
-        }
-        array.GetArrayPtr()[index] = T{item};
-        ++length;
-    };
-    void Delete(size_t index) override final{
-        if(index>length-1) throw IndexOutOfBoundsException("Index out of bounds");
         T* array_p = array.GetArrayPtr();
         if(index<top) {
+            index = capacity-top+index;
             for(size_t i=capacity-top; i<=index; ++i){
-                array_p[i] = array_p[i-1];
+                array_p[i+1] = array_p[i];
             }
-            --top;
-            --length;
+
         }
         else{
             index = index - top;
             for(size_t i=index; i<length-top; ++i){
                 array_p[i] = array_p[i+1];
             }
-            --length;
         }
+        array.GetArrayPtr()[index] = T{item};
+    };
+    void Delete(size_t index) override final{
+        if(index>length-1) throw IndexOutOfBoundsException("Index out of bounds");
+        T* array_p = array.GetArrayPtr();
+        if(index<top) {
+            index = capacity-top+index;
+            for(size_t i=capacity-top; i<=index; ++i){
+                array_p[i+1] = array_p[i];
+            }
+            --top;
+        }
+        else{
+            index = index - top;
+            for(size_t i=index; i<length-top; ++i){
+                array_p[i] = array_p[i+1];
+            }
+        }
+        --length;
     };
     void DeleteCollection() override final{
         array.Delete();

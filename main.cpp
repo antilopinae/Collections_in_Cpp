@@ -3,11 +3,10 @@
 
 
 int main() {
-    if(test()) std::cout<<"TESTS SUCCESS"<<std::endl;
+    if(test()) std::cout<<"TESTS SUCCESS\n"<<std::endl;
     else throw "TESTS FAILED";
 
-//    View view = View();
-//    view.StartView();
+    debug();
 
     return 0;
 }
